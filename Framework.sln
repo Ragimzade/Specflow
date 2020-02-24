@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{7A64DC58-37F4-4EAB-9E51-66152C4A95AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecflowBdd", "SpecflowBdd\SpecflowBdd.csproj", "{3919F1CD-0806-42E3-BBE7-14F4F2DD1093}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A64DC58-37F4-4EAB-9E51-66152C4A95AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A64DC58-37F4-4EAB-9E51-66152C4A95AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A64DC58-37F4-4EAB-9E51-66152C4A95AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A64DC58-37F4-4EAB-9E51-66152C4A95AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3919F1CD-0806-42E3-BBE7-14F4F2DD1093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3919F1CD-0806-42E3-BBE7-14F4F2DD1093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3919F1CD-0806-42E3-BBE7-14F4F2DD1093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3919F1CD-0806-42E3-BBE7-14F4F2DD1093}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,11 @@
+﻿{
+  "browser": "Chrome",
+  "baseUrl": "https://av.by/",
+  "browserDownloadFolder": "/resources/downloads",
+  "timeoutImplicitInSeconds": 0,
+  "timeoutInSeconds": 5,
+  "timeoutPageLoad": 30,
+  "pollingIntervalInMillis": 300,
+  "pageLoadTimeOutInSeconds": 60,
+  "screenshotsFolder": "screenshots"
+}

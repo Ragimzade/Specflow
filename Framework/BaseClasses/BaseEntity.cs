@@ -2,8 +2,7 @@
 using System.IO;
 using Framework.Browsers;
 using Framework.Logging;
-using Framework.Utils;
-using OpenQA.Selenium;
+ using OpenQA.Selenium;
 
 namespace Framework.BaseClasses
 {

@@ -1,5 +1,4 @@
-﻿﻿using System;
- using Framework.Browsers;
+﻿using Framework.Browsers;
 using Framework.Elements;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;

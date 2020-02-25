@@ -35,7 +35,7 @@ namespace Framework.Assertions
         private static bool EqualsAll( ICollection a, ICollection b)
         {
             if (a == null || b == null)
-                return (a == null && b == null);
+                return a == null && b == null;
 
             return a.Count == b.Count && a.Cast<object>().SequenceEqual(b.Cast<object>());
         }

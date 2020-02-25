@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Bdd.Model
+﻿namespace Bdd.Model
 {
     public class CarData
     {

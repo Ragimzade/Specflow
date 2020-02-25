@@ -9,7 +9,7 @@ namespace Framework.Logging
     {
         private static Logg _instance;
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         public static Logg GetInstance()
         {

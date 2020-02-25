@@ -18,6 +18,7 @@ namespace Framework.BaseClasses
         public static readonly Configuration.Configuration Config =
             Configuration.Configuration.ParseConfiguration<Configuration.Configuration>(
                 File.ReadAllText(Path.Combine(AppContext.BaseDirectory, ConfigFileName)));
+        
 
         public static IWebDriver GetDriver(string browser)
         {

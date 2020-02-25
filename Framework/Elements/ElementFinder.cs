@@ -16,7 +16,6 @@ namespace Framework.Elements
         {
             try
             {
-                // Log.Info($"Waiting for element {locator}");
                 return SmartWait.WaitFor(Driver, ExpectedConditions.ElementIsVisible(locator),
                     TimeOutSeconds, TimeOutInMillis);
             }
@@ -47,8 +46,7 @@ namespace Framework.Elements
         {
             SmartWait.WaitFor(Driver, condition, TimeOutSeconds, TimeOutInMillis);
         }
-
-
+        
         protected IWebElement FindElement(By locator)
         {
             return InternalFinder(locator);

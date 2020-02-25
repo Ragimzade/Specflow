@@ -16,7 +16,7 @@
 
     Examples:
       | brand | model |
+      | Lexus | CT    |
       | Lexus | LX    |
-#      | Lexus | LS    |
 
     

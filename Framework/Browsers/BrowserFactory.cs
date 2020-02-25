@@ -1,14 +1,13 @@
 ﻿﻿using System;
-using Framework.BaseClasses;
-using Framework.Utils;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Firefox;
-using WebDriverManager;
-using WebDriverManager.DriverConfigs.Impl;
+ using Framework.BaseClasses;
+ using OpenQA.Selenium;
+ using OpenQA.Selenium.Chrome;
+ using OpenQA.Selenium.Edge;
+ using OpenQA.Selenium.Firefox;
+ using WebDriverManager;
+ using WebDriverManager.DriverConfigs.Impl;
 
-namespace Framework.Browsers
+ namespace Framework.Browsers
 {
     internal  class BrowserFactory : BaseEntity
     {

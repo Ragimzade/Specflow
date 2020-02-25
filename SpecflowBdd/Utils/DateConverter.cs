@@ -91,7 +91,7 @@ namespace Bdd.Utils
                     break;
             }
 
-            if (result == "") return Convert.ToDateTime(result);
+            if (result == "") return dt;
             
             var date = DateTime.ParseExact(result.Replace(" ", string.Empty), "d.MM.yy",
                 null);

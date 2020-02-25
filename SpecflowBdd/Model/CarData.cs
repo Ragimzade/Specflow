@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Bdd.Model
 {
@@ -8,7 +9,7 @@ namespace Bdd.Model
         public int Price { get; }
         public string Year { get; }
         public string Date { get; }
-
+        
         public CarData(string name, int price, string year, string date)
         {
             Name = name;

@@ -4,6 +4,7 @@ using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.Reporter;
 using Framework.BaseClasses;
+using Framework.Browsers;
 using Framework.Utils;
 using TechTalk.SpecFlow;
 

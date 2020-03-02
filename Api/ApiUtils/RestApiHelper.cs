@@ -20,7 +20,6 @@ namespace Api.ApiUtils
         {
             _restClient = new RestClient(BaseUrl);
             _restClient.AddDefaultHeader("Authorization", $"Bearer {BearerToken}");
-
             return _restClient;
         }
 

@@ -1,19 +1,22 @@
-﻿namespace Api.Model
+﻿using Newtonsoft.Json;
+
+namespace Api.Model
 {
     public class RepositoryData
     {
         public RepositoryData(string name)
         {
-            this.name = name;
+            Name = name;
         }
 
         private string Id { get; set; }
-
-        public string name { get; }
+        
+        [JsonProperty("name")]
+        public string Name { get; }
 
         public override string ToString()
         {
-            return "name=" + name + ", Id=" + Id;
+            return "name=" + Name + ", Id=" + Id;
         }
     }
 }

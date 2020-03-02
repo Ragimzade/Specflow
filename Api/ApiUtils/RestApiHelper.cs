@@ -66,8 +66,11 @@ namespace Api.ApiUtils
         {
             return restClient.Execute(restRequest);
         }
-
-        public static TX GetContent<TX>(IRestResponse response)
+    }
+    
+    public static class RestApiHelperExtensions
+    {
+        public static TX GetContent<TX>(this IRestResponse response)
         {
             var content = response.Content;
             var deserializeObject = Newtonsoft.Json.JsonConvert.DeserializeObject<TX>(content);

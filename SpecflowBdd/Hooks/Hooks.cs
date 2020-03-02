@@ -4,7 +4,6 @@ using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.Reporter;
 using Framework.BaseClasses;
-using Framework.Browsers;
 using Framework.Utils;
 using TechTalk.SpecFlow;
 
@@ -18,6 +17,7 @@ namespace Bdd.Hooks
         private static ExtentHtmlReporter _extentHtmlReporter;
         private static ExtentTest _feature;
         private static ExtentTest _scenario;
+
 
         [BeforeTestRun]
         public static void InitializeReport()
@@ -46,7 +46,6 @@ namespace Bdd.Hooks
             _scenarioContext = scenarioContext;
             _scenario = _feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title,
                 scenarioContext.ScenarioInfo.Description);
-            Driver = GetDriver(Config.Browser);
         }
 
         [AfterStep]

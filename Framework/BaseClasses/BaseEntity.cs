@@ -1,35 +1,35 @@
-﻿﻿using System;
+﻿using System;
 using System.IO;
 using Framework.Browsers;
 using Framework.Logging;
- using OpenQA.Selenium;
+using OpenQA.Selenium;
 
 namespace Framework.BaseClasses
 {
     public class BaseEntity
     {
-        protected static IWebDriver Driver;
         protected static readonly Logg Log = Logg.GetInstance();
         private const string ConfigFileName = "config.json";
         private static IWebDriver _instance;
-        private static readonly object SyncRoot = new object();
-        
+        private static readonly object Locker = new object();
+        protected static IWebDriver Driver => GetDriver;
+
         protected static readonly Configuration.Configuration Config =
             Configuration.Configuration.ParseConfiguration<Configuration.Configuration>(
                 File.ReadAllText(Path.Combine(AppContext.BaseDirectory, ConfigFileName)));
-        
-        public static IWebDriver GetDriver(string browser)
-        {
-            if (_instance == null)
-            {
-                lock (SyncRoot)
-                {
-                    if (_instance == null)
-                        _instance = BrowserFactory.InitDriver(browser);
-                }
-            }
 
-            return _instance;
+        public static IWebDriver GetDriver
+        {
+            get
+            {
+                if (_instance == null)
+                    lock (Locker)
+                    {
+                        _instance = BrowserFactory.InitDriver(Config.Browser);
+                    }
+
+                return _instance;
+            }
         }
 
         protected static void QuitBrowser()

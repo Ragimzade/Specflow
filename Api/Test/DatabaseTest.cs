@@ -26,7 +26,6 @@ namespace Api.Test
             var location = Path.Combine(AppContext.BaseDirectory, "Screens", "123" + "-" +".png");
             
             Console.WriteLine(Path.GetFullPath(location));
-            Path.GetRelativePath(location);
             FileInfo f = new FileInfo(location);
             string fullname = f.FullName;
             Console.WriteLine(fullname);

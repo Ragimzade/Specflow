@@ -19,12 +19,14 @@ namespace Bdd.Hooks
         private static ExtentTest _feature;
         private static ExtentTest _scenario;
 
+        private static readonly string path = Path.Combine(AppContext.BaseDirectory, Config.ScreenshotsFolder,
+            "extent.html");
 
         [BeforeTestRun]
         public static void InitializeReport()
         {
             _extentHtmlReporter =
-                new ExtentHtmlReporter(Path.Combine(AppContext.BaseDirectory, Config.ScreenshotsFolder, "extent.html"));
+                new ExtentHtmlReporter(path);
             _extentReports = new ExtentReports();
             _extentReports.AttachReporter(_extentHtmlReporter);
             FileUtils.CleanDirectory(FileUtils.BuildDirectoryPath());
@@ -74,13 +76,13 @@ namespace Bdd.Hooks
         {
             if (_scenarioContext.TestError != null)
             {
-                var screenshotPath = Path.GetFullPath(ScreenshotUtils.GetScreenshot());
+                var screenshotPath = Path.GetRelativePath(ScreenshotUtils.GetScreenshot(), path);
                 Debug.WriteLine(screenshotPath);
                 Log.Debug(screenshotPath);
                 _scenario.CreateNode<T>(_scenarioContext.StepContext.StepInfo.Text)
                     .Fail(_scenarioContext.TestError.Message,
                         MediaEntityBuilder
-                            .CreateScreenCaptureFromPath("." + screenshotPath, "Fail screenshot")
+                            .CreateScreenCaptureFromPath(screenshotPath, "Fail screenshot")
                             .Build());
                 Debug.WriteLine(screenshotPath);
                 Log.Info(screenshotPath);

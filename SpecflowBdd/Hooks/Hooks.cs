@@ -73,11 +73,11 @@ namespace Bdd.Hooks
         {
             if (_scenarioContext.TestError != null)
             {
-                var screenshotPath = ScreenshotUtils.GetScreenshot();
+                var screenshotPath = Path.GetFullPath(ScreenshotUtils.GetScreenshot());
                 _scenario.CreateNode<T>(_scenarioContext.StepContext.StepInfo.Text)
                     .Fail(_scenarioContext.TestError.Message,
                         MediaEntityBuilder
-                            .CreateScreenCaptureFromPath(ScreenshotUtils.GetScreenshot())
+                            .CreateScreenCaptureFromPath(screenshotPath)
                             .Build());
             }
             else

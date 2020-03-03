@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
@@ -74,11 +75,15 @@ namespace Bdd.Hooks
             if (_scenarioContext.TestError != null)
             {
                 var screenshotPath = Path.GetFullPath(ScreenshotUtils.GetScreenshot());
+                Debug.WriteLine(screenshotPath);
+                Log.Debug(screenshotPath);
                 _scenario.CreateNode<T>(_scenarioContext.StepContext.StepInfo.Text)
                     .Fail(_scenarioContext.TestError.Message,
                         MediaEntityBuilder
-                            .CreateScreenCaptureFromPath(screenshotPath)
+                            .CreateScreenCaptureFromPath("." + screenshotPath, "Fail screenshot")
                             .Build());
+                Debug.WriteLine(screenshotPath);
+                Log.Info(screenshotPath);
             }
             else
             {

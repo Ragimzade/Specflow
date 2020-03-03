@@ -77,7 +77,7 @@ namespace Bdd.Hooks
                 _scenario.CreateNode<T>(_scenarioContext.StepContext.StepInfo.Text)
                     .Fail(_scenarioContext.TestError.Message,
                         MediaEntityBuilder
-                            .CreateScreenCaptureFromPath(screenshotPath, "Fail Image")
+                            .CreateScreenCaptureFromPath(ScreenshotUtils.GetScreenshot())
                             .Build());
             }
             else

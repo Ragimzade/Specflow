@@ -10,6 +10,7 @@ namespace Framework.Utils
         private const string Database = "database";
         private const string Username = "root";
         private const string Password = "9802357s";
+        private MySqlConnection _connection;
 
         private DatabaseUtils()
         {
@@ -23,20 +24,21 @@ namespace Framework.Utils
         }
 
         private MySqlConnection
-            GetConnection(string host = Host, int port = Port, string database = Database, string username = Username, string password = Password)
+            GetConnection(string host = Host, int port = Port, string database = Database, string username = Username,
+                string password = Password)
         {
             var connString = "Server=" + host + ";Database=" + database
                              + ";port=" + port + ";User Id=" + username + ";password=" + password;
-            var connection = new MySqlConnection(connString);
+            _connection = new MySqlConnection(connString);
 
-            return connection;
+            return _connection;
         }
 
         public IEnumerable<Dictionary<string, object>> GetQueryMysql(string sqlQuery)
         {
-            var conn = GetConnection();
-            conn.Open();
-            var sqlCommand = new MySqlCommand(sqlQuery, conn);
+            _connection = GetConnection();
+            _connection.Open();
+            var sqlCommand = new MySqlCommand(sqlQuery, _connection);
             var reader = sqlCommand.ExecuteReader();
             var columnCount = reader.FieldCount;
             var resultSet = new List<Dictionary<string, object>>();
@@ -52,6 +54,11 @@ namespace Framework.Utils
             }
 
             return resultSet;
+        }
+
+        public void CloseConnection()
+        {
+            _connection.Close();
         }
     }
 }

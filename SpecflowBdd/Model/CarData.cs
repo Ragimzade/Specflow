@@ -6,7 +6,7 @@
         public int Price { get; }
         public string Year { get; }
         public string Date { get; }
-        
+
         public CarData(string name, int price, string year, string date)
         {
             Name = name;
@@ -22,8 +22,7 @@
 
         public bool Equals(CarData other)
         {
-            if (other == null) return false;
-            return Name == other.Name && Price == other.Price && Year == other.Year && Date == other.Date;
+            return Name == other?.Name && Price == other?.Price && Year == other?.Year && Date == other?.Date;
         }
 
         public override bool Equals(object obj) => Equals(obj as CarData);

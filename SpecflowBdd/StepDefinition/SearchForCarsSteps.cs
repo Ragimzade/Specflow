@@ -5,7 +5,6 @@ using Bdd.Pages;
 using Framework.Assertions;
 using Framework.BaseClasses;
 using Framework.Browsers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
 namespace Bdd.StepDefinition
@@ -39,7 +38,11 @@ namespace Bdd.StepDefinition
         public void AssertResultContainsCorrectCars(string brand, string model)
         {
             _carLists.CarsOnPage = _resultPage.GetCarsOnPage();
-            foreach (var car in _carLists.CarsOnPage) Assert.IsTrue(car.Name.Contains(brand + " " + model));
+            foreach (var car in _carLists.CarsOnPage)
+            {
+                _softAssert.True("Searching results don't contain correct brand",
+                    car.Name.Contains(brand + " " + model));
+            }
         }
 
         [When(@"User sorts cars by price")]

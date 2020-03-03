@@ -21,9 +21,9 @@ namespace Bdd.Utils
         protected internal static string ConvertDate(string stringValue)
         {
             DateTime currentDate;
-            var sKeyResult = Hours.FirstOrDefault(stringValue.Contains);
+            var hoursString = Hours.FirstOrDefault(stringValue.Contains);
 
-            switch (sKeyResult)
+            switch (hoursString)
             {
                 case "вчера":
                     currentDate = DateTime.Now.AddHours(-24);
@@ -46,9 +46,9 @@ namespace Bdd.Utils
             var dt = DateTime.Now;
             var month = dt.Month;
             var year = DateTime.Now.ToString("yy");
-            var sKeyResult = Months.FirstOrDefault(stringValue.Contains);
+            var monthsString = Months.FirstOrDefault(stringValue.Contains);
 
-            switch (sKeyResult)
+            switch (monthsString)
             {
                 case "янв":
                     result = stringValue.Replace("янв", $".01.{year}");
@@ -91,12 +91,19 @@ namespace Bdd.Utils
                     break;
             }
 
-            if (result == "") return dt;
+            if (result == "")
+            {
+                return dt;
+            }
             
             var date = DateTime.ParseExact(result.Replace(" ", string.Empty), "d.MM.yy",
                 null);
-            if (date.Month > month) date = date.AddYears(-1);
             
+            if (date.Month > month)
+            {
+                date = date.AddYears(-1);
+            }
+
             return date;
         }
     }

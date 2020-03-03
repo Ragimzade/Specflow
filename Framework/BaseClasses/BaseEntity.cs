@@ -27,7 +27,6 @@ namespace Framework.BaseClasses
                     {
                         _instance = BrowserFactory.InitDriver(Config.Browser);
                     }
-
                 return _instance;
             }
         }

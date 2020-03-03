@@ -76,7 +76,7 @@ namespace Bdd.Hooks
         {
             if (_scenarioContext.TestError != null)
             {
-                var screenshotPath = Path.GetRelativePath(path, ScreenshotUtils.GetScreenshot());
+                var screenshotPath = ScreenshotUtils.GetScreenshot();
                 Debug.WriteLine(screenshotPath);
                 Log.Debug(screenshotPath);
                 _scenario.CreateNode<T>(_scenarioContext.StepContext.StepInfo.Text)

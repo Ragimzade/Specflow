@@ -23,7 +23,7 @@ namespace Bdd.Hooks
         public static void InitializeReport()
         {
             _extentHtmlReporter =
-                new ExtentHtmlReporter(Path.Combine(AppContext.BaseDirectory, "extent.html"));
+                new ExtentHtmlReporter(Path.Combine(AppContext.BaseDirectory, Config.ScreenshotsFolder, "extent.html"));
             _extentReports = new ExtentReports();
             _extentReports.AttachReporter(_extentHtmlReporter);
             FileUtils.CleanDirectory(FileUtils.BuildDirectoryPath());

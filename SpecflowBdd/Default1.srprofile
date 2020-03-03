@@ -9,6 +9,9 @@
   <TestAssemblyPaths>
     <TestAssemblyPath>Bdd.dll</TestAssemblyPath>
   </TestAssemblyPaths>
+    <TestAssemblyPaths>
+      <TestAssemblyPath>Bdd.dll</TestAssemblyPath>
+    </TestAssemblyPaths>
   <DeploymentTransformation>
     <Steps>
       <!-- sample config transform to change the connection string-->

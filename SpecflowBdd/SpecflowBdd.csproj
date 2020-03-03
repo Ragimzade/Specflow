@@ -43,9 +43,6 @@
       <Compile Update="Steps\SearchForCars.feature.cs">
         <DependentUpon>SearchForCars.feature</DependentUpon>
       </Compile>
-      <Compile Update="Features\SearchForCars.feature.cs">
-        <DependentUpon>SearchForCars.feature</DependentUpon>
-      </Compile>
     </ItemGroup>
 
 </Project>

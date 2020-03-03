@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.Reporter;
 using Framework.BaseClasses;
 using Framework.Utils;
+using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
 namespace Bdd.Hooks
@@ -19,14 +19,13 @@ namespace Bdd.Hooks
         private static ExtentTest _feature;
         private static ExtentTest _scenario;
 
-        private static readonly string path = Path.Combine(AppContext.BaseDirectory, Config.ScreenshotsFolder,
-            "extent.html");
+        private const string path = "./screenshots/" + "extent.html";
 
         [BeforeTestRun]
         public static void InitializeReport()
         {
             _extentHtmlReporter =
-                new ExtentHtmlReporter(path);
+                new ExtentHtmlReporter(Path.Combine(AppContext.BaseDirectory, "extent.html"));
             _extentReports = new ExtentReports();
             _extentReports.AttachReporter(_extentHtmlReporter);
             FileUtils.CleanDirectory(FileUtils.BuildDirectoryPath());
@@ -76,16 +75,12 @@ namespace Bdd.Hooks
         {
             if (_scenarioContext.TestError != null)
             {
-                var screenshotPath = ScreenshotUtils.GetScreenshot();
-                Debug.WriteLine(screenshotPath);
-                Log.Debug(screenshotPath);
+                var screenshot = ((ITakesScreenshot) Driver).GetScreenshot().AsBase64EncodedString;
                 _scenario.CreateNode<T>(_scenarioContext.StepContext.StepInfo.Text)
                     .Fail(_scenarioContext.TestError.Message,
                         MediaEntityBuilder
-                            .CreateScreenCaptureFromPath(screenshotPath, "Fail screenshot")
+                            .CreateScreenCaptureFromBase64String(screenshot, "Fail Image")
                             .Build());
-                Debug.WriteLine(screenshotPath);
-                Log.Info(screenshotPath);
             }
             else
             {

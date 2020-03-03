@@ -1,4 +1,5 @@
-﻿using Framework.BaseClasses;
+﻿using System.IO;
+using Framework.BaseClasses;
 using OpenQA.Selenium;
 
 namespace Framework.Utils
@@ -12,8 +13,8 @@ namespace Framework.Utils
 
             if (screenshotName.Equals("Screen"))
             {
-                var filename = "./screenshots/" +
-                               DateUtils.GetTimeStamp() + "-" + screenshotName + ".png";
+                var filename = Path.Combine(FileUtils.BuildDirectoryPath(),
+                    DateUtils.GetTimeStamp() + "-" + screenshotName + ".png");
                 screenshot.SaveAsFile(filename, ScreenshotImageFormat.Png);
                 return filename;
             }

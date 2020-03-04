@@ -18,7 +18,7 @@ namespace Api.Test
             var repositoriesResponse = CommonSteps.GetRepositories();
             var repositoriesList = repositoriesResponse.GetContent<List<RepositoryData>>();
             repositoriesList.Count.Should().NotBe(0);
-            repositoriesResponse.StatusDescription.Should().NotBe("OK");
+            repositoriesResponse.StatusDescription.Should().Be("OK");
 
             Log.Step(2, "Posting new repository");
             var repository = new RepositoryData("ThatIsNewRepository");
@@ -52,7 +52,7 @@ namespace Api.Test
             var repositoriesAfterDeleteResponse = CommonSteps.GetRepositories();
             var repositoriesListAfterDelete = repositoriesAfterDeleteResponse.GetContent<List<RepositoryData>>();
             repositoriesAfterDeleteResponse.StatusDescription.Should().Be("OK");
-            repositoriesListAfterDelete.Any(repo => repo.Name == newRepository.Name).Should().Be(false);
+            repositoriesListAfterDelete.Any(repo => repo.Name != newRepository.Name).Should().Be(true);
         }
     }
 }

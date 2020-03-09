@@ -5,6 +5,7 @@ using Api.Model;
 using Api.Steps;
 using FluentAssertions;
 using Framework.BaseClasses;
+using Framework.Utils;
 using NUnit.Framework;
 
 namespace Api.Test
@@ -14,7 +15,9 @@ namespace Api.Test
         [Test]
         public void GitHubTest()
         {
-            Log.Step(1, "Getting repositories");
+            var stepHelper = new StepHelper();
+
+            stepHelper.LogStep("Getting repositories");
             var repositoriesResponse = CommonSteps.GetRepositories();
             var repositoriesList = repositoriesResponse.GetContent<List<RepositoryData>>();
             repositoriesList.Count.Should().NotBe(0,
@@ -22,19 +25,19 @@ namespace Api.Test
             repositoriesResponse.StatusDescription.Should().Be("OK",
                 "Status should be 'OK' when getting repositories");
 
-            Log.Step(2, "Creating new repository");
+            stepHelper.LogStep("Creating new repository");
             var repository = new RepositoryData("ThatIsNewRepository");
             var createRepository = CommonSteps.CreateRepository(repository);
             createRepository.StatusDescription.Should().Be("Created",
                 "Status Description should be 'Created' when creating a repository");
 
-            Log.Step(3, "Asserting new repository presence in repositories list");
+            stepHelper.LogStep("Asserting new repository presence in repositories list");
             var repositoriesAfterCreationResponse = CommonSteps.GetRepositories();
             var repositoriesListAfterCreation = repositoriesAfterCreationResponse.GetContent<List<RepositoryData>>();
             repositoriesListAfterCreation.Any(repo => repo.Name == repository.Name)
                 .Should().Be(true, "Created repository should be present in repository list");
 
-            Log.Step(4, "Updating name of posted repository");
+            stepHelper.LogStep("Updating name of posted repository");
             var newRepository = new RepositoryData("ThatIsUpdatedRepository");
             var updateRepositoryNameResponse =
                 CommonSteps.UpdateRepositoryName(repository.Name, newRepository);
@@ -44,7 +47,7 @@ namespace Api.Test
             repositoryDataAfterUpdate.Name.Should().Be(newRepository.Name,
                 $"Repository name should be {newRepository.Name} after updating name ");
 
-            Log.Step(5, "Asserting renamed repository presence in repositories list");
+            stepHelper.LogStep("Asserting renamed repository presence in repositories list");
             var repositoriesAfterUpdateNameResponse = CommonSteps.GetRepositories();
             var repositoriesListAfterUpdateNameContent =
                 repositoriesAfterUpdateNameResponse.GetContent<List<RepositoryData>>();
@@ -52,12 +55,12 @@ namespace Api.Test
                 .Should().Be(true,
                     $"Repository with name {newRepository.Name} should be present in repository list");
 
-            Log.Step(6, "Delete created repository");
+            stepHelper.LogStep("Delete created repository");
             var deleteRepositoryResponse = CommonSteps.DeleteRepository(newRepository.Name);
             deleteRepositoryResponse.StatusCode.ToString().Should().Be("NoContent",
                 "StatusCode should be 'NoContent' when deleting repository");
 
-            Log.Step(7, "Asserting that repository is deleted");
+            stepHelper.LogStep("Asserting that repository is deleted");
             var repositoriesAfterDeleteResponse = CommonSteps.GetRepositories();
             var repositoriesListAfterDelete = repositoriesAfterDeleteResponse.GetContent<List<RepositoryData>>();
             repositoriesAfterDeleteResponse.StatusDescription.Should().Be("OK");

@@ -5,7 +5,7 @@ using OpenQA.Selenium;
 
 namespace Framework.BaseClasses
 {
-    public abstract class BaseForm : ElementFinder
+    public abstract class BaseForm : WebElementActions
     {
         private readonly By _formSelector;
         private readonly string _formName;

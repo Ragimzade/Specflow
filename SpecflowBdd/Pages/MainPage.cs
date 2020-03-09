@@ -22,13 +22,13 @@ namespace Bdd.Pages
             dpdBrand.SelectByText(brand);
             var drpModel = new SelectElement(WaitForElement(DpdModel));
             drpModel.SelectByText(model);
-            WaitForElement(BtnFind).Click();
+            Click(BtnFind);
             return new ResultPage();
         }
 
         public LoginPage GoToLoginPage()
         {
-            WaitForElementToBeClickable(BtnLogin).Click();
+            Click(BtnLogin);
             return new LoginPage();
         }
     }

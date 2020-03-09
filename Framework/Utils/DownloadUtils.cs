@@ -1,13 +1,12 @@
 ﻿﻿using System.IO;
-using Framework.Elements;
+ using Framework.Elements;
 
-namespace Framework.Utils
+ namespace Framework.Utils
 {
     public class DownloadUtils : ElementFinder
     {
         private const int TimeoutInSeconds = 20;
         private const int PollingIntervalInMillis = 70;
-
 
         public static void CleanDirectory(string directoryLocation)
         {

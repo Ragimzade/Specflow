@@ -4,24 +4,23 @@ using NUnit.Framework;
 
 namespace Api.Test
 {
-    public class DatabaseTest
+    public class DatabaseTest : RestApiTests
     {
+        private static DatabaseUtils _db;
         private const string Sql = "SELECT * FROM database.products";
 
         [Test]
         public void TestDb()
         {
-            var db = DatabaseUtils.Instance();
-            var dict = db.GetQueryMysql(Sql);
+            _db = DatabaseUtils.Connect();
+            var dict = _db.GetQueryMysql(Sql);
             foreach (var delivery in dict)
             {
                 foreach (var (key, value) in delivery)
                 {
-                    Console.WriteLine(key + " : " + value);
+                    Console.WriteLine($"{key} : {value}");
                 }
             }
-            
-            db.CloseConnection();
         }
     }
 }

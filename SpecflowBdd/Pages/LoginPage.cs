@@ -18,7 +18,7 @@ namespace Bdd.Pages
         {
             var inputLogin = new TextField {Locator = TxtLogin, TypedValue = login};
             var inputPassword = new TextField {Locator = TxtPassword, TypedValue = password};
-            WaitForElementToBeClickable(BtnLogin).Click();
+            Click(BtnLogin);
         }
     }
 }

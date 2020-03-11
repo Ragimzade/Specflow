@@ -48,4 +48,9 @@
       </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="JsonParse\addresses.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
 </Project>

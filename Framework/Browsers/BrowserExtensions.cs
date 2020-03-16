@@ -1,4 +1,6 @@
-﻿﻿using Framework.Logging;
+﻿using System;
+using System.IO;
+using Framework.Logging;
 using Framework.Utils;
 using OpenQA.Selenium;
 
@@ -8,6 +10,12 @@ namespace Framework.Browsers
     {
         private static readonly Logg Log = Logg.GetInstance();
 
+        private const string ConfigFileName = "config.json";
+
+        public static readonly Configuration.Configuration Config =
+            Configuration.Configuration.ParseConfiguration<Configuration.Configuration>(
+                File.ReadAllText(Path.Combine(AppContext.BaseDirectory, ConfigFileName)));
+
         public static string GetCurrentUrl(this IWebDriver driver)
         {
             return driver.Url;
@@ -16,14 +24,14 @@ namespace Framework.Browsers
         public static void OpenBaseUrl(this IWebDriver driver)
         {
             Log.Debug("browser");
-            driver.Url = JsonReader.GetBaseUrl();
+            driver.Url = Config.BaseUrl;
         }
 
         public static void WaitForPageLoaded(this IWebDriver driver)
         {
             SmartWait.WaitFor(driver,
                 b => ((IJavaScriptExecutor) b).ExecuteScript("return document.readyState").Equals("complete"),
-                JsonReader.GetPageLoadTimeOutInSeconds());
+                Config.PageLoadTimeOutInSeconds);
         }
 
         public static void RefreshPage(this IWebDriver driver)

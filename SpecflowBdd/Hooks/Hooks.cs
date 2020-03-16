@@ -5,6 +5,7 @@ using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.Reporter;
 using Framework.BaseClasses;
 using Framework.Utils;
+using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
 namespace Bdd.Hooks
@@ -17,6 +18,7 @@ namespace Bdd.Hooks
         private static ExtentHtmlReporter _extentHtmlReporter;
         private static ExtentTest _feature;
         private static ExtentTest _scenario;
+
 
         [BeforeTestRun]
         public static void InitializeReport()
@@ -45,7 +47,6 @@ namespace Bdd.Hooks
             _scenarioContext = scenarioContext;
             _scenario = _feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title,
                 scenarioContext.ScenarioInfo.Description);
-            Driver = GetDriver(Config.Browser);
         }
 
         [AfterStep]
@@ -73,11 +74,11 @@ namespace Bdd.Hooks
         {
             if (_scenarioContext.TestError != null)
             {
-                var screenshotPath = ScreenshotUtils.GetScreenshot();
+                var screenshot = ((ITakesScreenshot) Driver).GetScreenshot().AsBase64EncodedString;
                 _scenario.CreateNode<T>(_scenarioContext.StepContext.StepInfo.Text)
                     .Fail(_scenarioContext.TestError.Message,
                         MediaEntityBuilder
-                            .CreateScreenCaptureFromPath(screenshotPath, "Fail Image")
+                            .CreateScreenCaptureFromBase64String(screenshot, "Fail Image")
                             .Build());
             }
             else

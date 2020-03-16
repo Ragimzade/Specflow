@@ -63,5 +63,10 @@ namespace Framework.Logging
         {
             Log.Info(message);
         }
+
+        public void Info(object message)
+        {
+            Log.Info(message);
+        }
     }
 }

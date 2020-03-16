@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Framework.BaseClasses;
 using Framework.Utils;
@@ -12,18 +13,35 @@ namespace Framework.Elements
         private static readonly int TimeOutSeconds = Config.TimeOutInSeconds;
         private static readonly int TimeOutInMillis = Config.PollingIntervalInMillis;
 
-        private IWebElement InternalFinder(By locator)
+        protected IWebElement InternalFinder(By locator)
         {
             try
             {
-                return SmartWait.WaitFor(Driver, ExpectedConditions.ElementIsVisible(locator),
+                return SmartWait.WaitFor(Driver, ElementToBeEnabled(locator),
                     TimeOutSeconds, TimeOutInMillis);
             }
-            catch (Exception)
+            catch (TimeoutException)
             {
                 throw new Exception(
                     $"WebDriverTimeoutException: Element {locator} was not found for {TimeOutSeconds} seconds");
             }
+        }
+
+        protected IWebElement GetElement(By locator)
+        {
+            return Driver.FindElement(locator);
+        }
+
+        protected IEnumerable<IWebElement> FindElements(By locator)
+        {
+            WaitForCondition(ExpectedConditions.VisibilityOfAllElementsLocatedBy(locator));
+            return Driver.FindElements(locator);
+        }
+
+        protected IWebElement FindElementByText(By locator, string text)
+        {
+            var webElements = FindElements(locator);
+            return webElements.FirstOrDefault(e => e.Text.Equals(text));
         }
 
         protected IWebElement WaitForElement(By locator)
@@ -39,14 +57,13 @@ namespace Framework.Elements
         protected void WaitForChildElement(By parentLocator, By childLocator)
         {
             WaitForElement(parentLocator).FindElement(childLocator);
-            
         }
 
         private void WaitForCondition<T>(Func<IWebDriver, T> condition)
         {
             SmartWait.WaitFor(Driver, condition, TimeOutSeconds, TimeOutInMillis);
         }
-        
+
         protected IWebElement FindElement(By locator)
         {
             return InternalFinder(locator);
@@ -70,17 +87,26 @@ namespace Framework.Elements
             WaitForCondition(ExpectedConditions.ElementExists(locator));
         }
 
+        private static Func<IWebDriver, IWebElement> ElementToBeEnabled(By locator)
+        {
+            var element = Driver.FindElement(locator);
+            return webDriver =>
+            {
+                try
+                {
+                    return element != null && element.Enabled ? element : (IWebElement) null;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return (IWebElement) null;
+                }
+            };
+        }
+
         public IWebElement WaitForElementToBeClickable(By locator)
         {
             WaitForCondition(ExpectedConditions.ElementToBeClickable(locator));
             return InternalFinder(locator);
-        }
-
-        public void ScrollToElementAndClick(IWebElement webElement)
-        {
-            var jse = (IJavaScriptExecutor) Driver;
-            jse.ExecuteScript("arguments[0].scrollIntoView(true)", webElement);
-            webElement.Click();
         }
     }
 }

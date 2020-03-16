@@ -9,7 +9,7 @@
 
  namespace Framework.Browsers
 {
-    internal  class BrowserFactory : BaseEntity
+    public  class BrowserFactory : BaseEntity
     {
         private BrowserFactory()
         {

@@ -18,7 +18,7 @@ namespace Bdd.Pages
         private static readonly By BtnSortByPrice = By.XPath("//ul[@class='sorting-list']//a[contains(.,'цене')]");
         private static readonly By BtnSortByDate = By.XPath("//ul[@class='sorting-list']//a[contains(.,'дате')]");
         private static readonly By BtnSortByYear = By.XPath("//ul[@class='sorting-list']//a[contains(.,'году')]");
-        
+
         public ResultPage() : base(FormResultPage, "resultPage")
         {
         }
@@ -56,19 +56,19 @@ namespace Bdd.Pages
 
         public List<CarData> SortResultByPrice()
         {
-            WaitForElementToBeClickable(BtnSortByPrice).Click();
+            Click(BtnSortByPrice);
             return GetCarsOnPage();
         }
 
         public List<CarData> SortResultByYear()
         {
-            WaitForElementToBeClickable(BtnSortByYear).Click();
+            Click(BtnSortByYear);
             return GetCarsOnPage();
         }
 
         public List<CarData> SortResultByDate()
         {
-            WaitForElementToBeClickable(BtnSortByDate).Click();
+            Click(BtnSortByDate);
             return GetCarsOnPage();
         }
     }

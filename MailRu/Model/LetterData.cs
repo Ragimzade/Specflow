@@ -15,6 +15,5 @@
         {
             return $"subject:{Subject}, text:{Text}";
         }
-
     }
 }

@@ -12,14 +12,7 @@ namespace Framework.Utils
         public static string CutNonDigitCharacter(this string valueToCut) =>
             Regex.Replace(valueToCut, @"^\s+$[\r\n]*",
                 string.Empty, RegexOptions.Multiline);
-
-        public static string ReplaceTabs(this string value)
-        {
-            string line = Regex.Replace(value, @"\t|\n|\r", "");
-
-            return line;
-        }
-
+        
         public static string RemoveExcessCharacters(this string value, int maxLen)
         {
             return value.Length > maxLen ? value.Substring(0, maxLen) : value;

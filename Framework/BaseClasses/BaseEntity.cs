@@ -33,7 +33,8 @@ namespace Framework.BaseClasses
 
         protected static void QuitBrowser()
         {
-            if (_instance == null) return;
+            if (_instance == null) 
+            {return;}
             _instance.Quit();
             _instance = null;
         }

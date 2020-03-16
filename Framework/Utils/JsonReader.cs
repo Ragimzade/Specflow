@@ -8,7 +8,7 @@ namespace Framework.Utils
     {
         private const string ConfigFileName = "config.json";
 
-        private static string ReadValueFromConfig(string value)
+        public static string ReadValueFromConfig(string value)
         {
             var sr = new StreamReader(ConfigFileName);
             var reader = new JsonTextReader(sr);

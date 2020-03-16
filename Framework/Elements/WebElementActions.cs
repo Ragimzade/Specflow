@@ -23,6 +23,7 @@ namespace Framework.Elements
 
         protected void TypeValue(By locator, string value)
         {
+            WaitForElementToBeClickable(locator);
             Wait.Until(ElementDoAction(locator, e => e.SendKeys(value)));
         }
 
@@ -40,6 +41,13 @@ namespace Framework.Elements
         {
             var jse = (IJavaScriptExecutor) Driver;
             Wait.Until(ElementDoAction(locator, e => jse.ExecuteScript("arguments[0].scrollIntoView(true)", e)));
+        }
+
+        protected string GetChildTextNode(IWebElement element, int childIndex = 0)
+        {
+            var jse = (IJavaScriptExecutor) Driver;
+            return (string) Wait.Until(ElementDoAction(element,
+                e => jse.ExecuteScript("return arguments[0].childNodes[arguments[1]].textContent;", e, childIndex)));
         }
 
         private Func<IWebDriver, T> ElementDoAction<T>(By locator, Func<IWebElement, T> function)
@@ -89,6 +97,29 @@ namespace Framework.Elements
                     Log.Debug(
                         $"InvalidOperationException element {locator} was not found for {TimeOutSeconds} seconds");
                     return null;
+                }
+            };
+        }
+
+        private Func<IWebDriver, T> ElementDoAction<T>(IWebElement element, Func<IWebElement, T> function)
+        {
+            return webDriver =>
+            {
+                try
+                {
+                    return function(element);
+                }
+                catch (StaleElementReferenceException)
+                {
+                    Log.Debug(
+                        $"StaleElementReferenceException element {element} was not found for {TimeOutSeconds} seconds");
+                    return default;
+                }
+                catch (InvalidOperationException)
+                {
+                    Log.Debug(
+                        $"InvalidOperationException element {element} was not found for {TimeOutSeconds} seconds");
+                    return default;
                 }
             };
         }

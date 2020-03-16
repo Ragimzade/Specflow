@@ -25,6 +25,11 @@ namespace Framework.Elements
                 throw new Exception(
                     $"WebDriverTimeoutException: Element {locator} was not found for {TimeOutSeconds} seconds");
             }
+            catch (NoSuchElementException)
+            {
+                throw new Exception(
+                    $"WebDriverTimeoutException: Element {locator} was not found for {TimeOutSeconds} seconds");
+            }
         }
 
         protected IWebElement GetElement(By locator)
@@ -103,10 +108,12 @@ namespace Framework.Elements
             };
         }
 
-        public IWebElement WaitForElementToBeClickable(By locator)
+        protected IWebElement WaitForElementToBeClickable(By locator)
         {
             WaitForCondition(ExpectedConditions.ElementToBeClickable(locator));
             return InternalFinder(locator);
         }
+
+  
     }
 }

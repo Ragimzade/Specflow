@@ -29,7 +29,7 @@ namespace Bdd.Utils
                     currentDate = DateTime.Now.AddHours(-24);
                     break;
                 case "назад":
-                    var hours = int.Parse(CutNonDigitCharacters(stringValue));
+                    var hours = int.Parse(stringValue.CutNonDigitCharacters());
                     currentDate = DateTime.Now.AddHours(-hours);
                     break;
                 default:

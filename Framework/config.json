@@ -1,11 +1,14 @@
 ﻿{
   "browser": "Chrome",
-  "baseUrl": "https://av.by/",
+  "baseUrl": "https://mail.ru/",
   "browserDownloadFolder": "/resources/downloads",
+  "downloadTimeOutInSeconds": 60,
   "timeoutImplicitInSeconds": 0,
   "timeoutInSeconds": 5,
   "timeoutPageLoad": 30,
   "pollingIntervalInMillis": 300,
   "pageLoadTimeOutInSeconds": 60,
-  "screenshotsFolder": "screenshots"
+  "screenshotsFolder": "screenshots",
+  "mailRuLogin": "mihalichenkoo@mail.ru",
+  "mailRuPassword": "9802357s"
 }

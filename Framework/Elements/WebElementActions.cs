@@ -11,42 +11,61 @@ namespace Framework.Elements
         private const int TimeOutInMillis = 1000;
         private static readonly WebDriverWait Wait = SmartWait.GetWait(Driver, TimeOutSeconds, TimeOutInMillis);
 
-        protected void Click(By locator)
+        private readonly By _locator;
+
+        public WebElementActions(By locator)
         {
-            Wait.Until(ElementDoAction(locator, e => e.Click()));
+            _locator = locator;
         }
 
-        protected string GetText(By locator)
+        protected WebElementActions()
         {
-            return Wait.Until(ElementDoAction(locator, e => e.Text));
         }
 
-        protected void TypeValue(By locator, string value)
+        public void Click()
         {
-            Wait.Until(ElementDoAction(locator, e => e.SendKeys(value)));
+            Wait.Until(ElementDoAction(e => e.Click()));
         }
 
-        protected string GetAttribute(By locator, string attribute)
+        public string GetText()
         {
-            return Wait.Until(ElementDoAction(locator, e => e.GetAttribute(attribute)));
+            return Wait.Until(ElementDoAction(e => e.Text));
         }
 
-        protected bool IsElementSelected(By locator)
+        public void TypeValue(string value)
         {
-            return Wait.Until(ElementDoAction(locator, e => e.Selected));
+            WaitForElementToBeClickable(_locator);
+            Wait.Until(ElementDoAction(e => e.SendKeys(value)));
         }
 
-        protected void ScrollIntoView(By locator)
+        public string GetAttribute(string attribute)
+        {
+            return Wait.Until(ElementDoAction(e => e.GetAttribute(attribute)));
+        }
+
+        public bool IsElementSelected()
+        {
+            return Wait.Until(ElementDoAction(e => e.Selected));
+        }
+
+        public void ScrollIntoView()
         {
             var jse = (IJavaScriptExecutor) Driver;
-            Wait.Until(ElementDoAction(locator, e => jse.ExecuteScript("arguments[0].scrollIntoView(true)", e)));
+            Wait.Until(ElementDoAction(e => jse.ExecuteScript("arguments[0].scrollIntoView(true)", e)));
         }
 
-        private Func<IWebDriver, T> ElementDoAction<T>(By locator, Func<IWebElement, T> function)
+        public string GetChildTextNodeByIndex(IWebElement element, int childIndex = 0)
+        {
+            var jse = (IJavaScriptExecutor) Driver;
+            return (string) Wait.Until(ElementDoAction(element,
+                e => jse.ExecuteScript("return arguments[0].childNodes[arguments[1]].textContent;", e, childIndex)));
+        }
+
+        private Func<IWebDriver, T> ElementDoAction<T>(Func<IWebElement, T> function)
         {
             return webDriver =>
             {
-                var element = InternalFinder(locator);
+                var element = InternalFinder(_locator);
 
                 try
                 {
@@ -55,23 +74,23 @@ namespace Framework.Elements
                 catch (StaleElementReferenceException)
                 {
                     Log.Debug(
-                        $"StaleElementReferenceException element {locator} was not found for {TimeOutSeconds} seconds");
+                        $"StaleElementReferenceException element {_locator} was not found for {TimeOutSeconds} seconds");
                     return default;
                 }
                 catch (InvalidOperationException)
                 {
                     Log.Debug(
-                        $"InvalidOperationException element {locator} was not found for {TimeOutSeconds} seconds");
+                        $"InvalidOperationException element {_locator} was not found for {TimeOutSeconds} seconds");
                     return default;
                 }
             };
         }
 
-        private Func<IWebDriver, IWebElement> ElementDoAction(By locator, Action<IWebElement> action)
+        private Func<IWebDriver, IWebElement> ElementDoAction(Action<IWebElement> action)
         {
             return webDriver =>
             {
-                var element = InternalFinder(locator);
+                var element = InternalFinder(_locator);
 
                 try
                 {
@@ -81,14 +100,37 @@ namespace Framework.Elements
                 catch (StaleElementReferenceException)
                 {
                     Log.Debug(
-                        $"StaleElementReferenceException element {locator} was not found for {TimeOutSeconds} seconds");
+                        $"StaleElementReferenceException element {_locator} was not found for {TimeOutSeconds} seconds");
                     return null;
                 }
                 catch (InvalidOperationException)
                 {
                     Log.Debug(
-                        $"InvalidOperationException element {locator} was not found for {TimeOutSeconds} seconds");
+                        $"InvalidOperationException element {_locator} was not found for {TimeOutSeconds} seconds");
                     return null;
+                }
+            };
+        }
+
+        private Func<IWebDriver, T> ElementDoAction<T>(IWebElement element, Func<IWebElement, T> function)
+        {
+            return webDriver =>
+            {
+                try
+                {
+                    return function(element);
+                }
+                catch (StaleElementReferenceException)
+                {
+                    Log.Debug(
+                        $"StaleElementReferenceException element {element} was not found for {TimeOutSeconds} seconds");
+                    return default;
+                }
+                catch (InvalidOperationException)
+                {
+                    Log.Debug(
+                        $"InvalidOperationException element {element} was not found for {TimeOutSeconds} seconds");
+                    return default;
                 }
             };
         }

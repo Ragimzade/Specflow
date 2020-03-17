@@ -22,18 +22,20 @@ namespace Framework.BaseClasses
         {
             get
             {
-                if (_instance == null)
-                    lock (Locker)
-                    {
-                        _instance = BrowserFactory.InitDriver(Config.Browser);
-                    }
+                if (_instance != null) 
+                    return _instance;
+                lock (Locker)
+                {
+                    _instance = BrowserFactory.InitDriver(Config.Browser);
+                }
                 return _instance;
             }
         }
 
         protected static void QuitBrowser()
         {
-            if (_instance == null) return;
+            if (_instance == null) 
+            {return;}
             _instance.Quit();
             _instance = null;
         }

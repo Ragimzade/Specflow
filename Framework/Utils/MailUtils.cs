@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Framework.BaseClasses;
 using MailKit;
 using MailKit.Net.Imap;
 using MimeKit;
 
 namespace Framework.Utils
 {
-    public static class MailUtils
+    public abstract class MailUtils : BaseEntity
     {
         private static readonly List<MimeMessage> EmailList = new List<MimeMessage>();
         private const string Host = "imap.mail.ru";
-        private const string UserName = "mihalichenkoo@mail.ru";
-        private const string Password = "9802357s";
+        private static readonly string UserName = Config.MailRuLogin;
+        private static readonly string Password = Config.MailRuPassword;
 
 
         private static void GetInboxMessages()
@@ -20,12 +21,10 @@ namespace Framework.Utils
             using (var client = new ImapClient())
             {
                 client.Connect(Host);
-
                 client.Authenticate(UserName, Password);
                 var inbox = client.Inbox;
                 inbox.Open(FolderAccess.ReadOnly);
-                Console.WriteLine("Total messages: {0}", inbox.Count);
-                Console.WriteLine("Recent messages: {0}", inbox.Recent);
+                Log.Info($"Total messages: {inbox.Count}");
                 for (var i = 0; i < inbox.Count; i++)
                 {
                     var message = inbox.GetMessage(i);
@@ -35,8 +34,8 @@ namespace Framework.Utils
                 client.Disconnect(true);
             }
         }
-        
-        public static MimeMessage FindEmail(string subject)
+
+        public static MimeMessage FindLetter(string subject)
         {
             GetInboxMessages();
             var email = EmailList.FirstOrDefault(e => e.Subject.Equals(subject));

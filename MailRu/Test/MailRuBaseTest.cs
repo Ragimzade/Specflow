@@ -35,9 +35,9 @@ namespace MailRu.Test
         public void AfterTest()
         {
             var status = TestContext.CurrentContext.Result.Outcome.Status;
-            var stacktrace = string.IsNullOrEmpty(TestContext.CurrentContext.Result.Message)
+            var stacktrace = string.IsNullOrEmpty(TestContext.CurrentContext.Result.StackTrace)
                 ? ""
-                : $"<pre>{TestContext.CurrentContext.Result.Message}</pre>";
+                : $"<pre>{TestContext.CurrentContext.Result.StackTrace + TestContext.CurrentContext.Result.Message}</pre>";
             Status logstatus;
 
             switch (status)

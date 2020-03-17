@@ -13,6 +13,12 @@ namespace Framework.Elements
         private static readonly int TimeOutSeconds = Config.TimeOutInSeconds;
         private static readonly int TimeOutInMillis = Config.PollingIntervalInMillis;
 
+        protected WebElementActions GetElement(By locator)
+        {
+            return new WebElementActions(locator);
+        }
+        
+
         protected IWebElement InternalFinder(By locator)
         {
             try
@@ -30,11 +36,6 @@ namespace Framework.Elements
                 throw new Exception(
                     $"WebDriverTimeoutException: Element {locator} was not found for {TimeOutSeconds} seconds");
             }
-        }
-
-        protected IWebElement GetElement(By locator)
-        {
-            return Driver.FindElement(locator);
         }
 
         protected IEnumerable<IWebElement> FindElements(By locator)
@@ -113,7 +114,5 @@ namespace Framework.Elements
             WaitForCondition(ExpectedConditions.ElementToBeClickable(locator));
             return InternalFinder(locator);
         }
-
-  
     }
 }

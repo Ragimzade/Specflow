@@ -16,10 +16,11 @@ namespace MailRu.Pages
 
         public InboxPage SignIn(string login, string password)
         {
-            TypeValue(TxtLogin, login);
-            Click(BtnPassword);
-            TypeValue(TxtPassword, password);
-            Click(BtnPassword);
+            GetElement(TxtLogin).TypeValue(login);
+            GetElement(BtnPassword).Click();
+            GetElement(TxtPassword).TypeValue(password);
+            GetElement(BtnPassword).Click();
+            GetElement(BtnPassword).Click();
             return new InboxPage();
         }
     }

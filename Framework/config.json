@@ -2,6 +2,7 @@
   "browser": "Chrome",
   "baseUrl": "https://mail.ru/",
   "browserDownloadFolder": "/resources/downloads",
+  "downloadTimeOutInSeconds": 60,
   "timeoutImplicitInSeconds": 0,
   "timeoutInSeconds": 5,
   "timeoutPageLoad": 30,

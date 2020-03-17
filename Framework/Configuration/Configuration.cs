@@ -4,9 +4,14 @@ namespace Framework.Configuration
 {
     public class Configuration : IConfiguration
     {
-        [JsonProperty("browser")] public string Browser { get; set; }
+        [JsonProperty("browser")] 
+        public string Browser { get; set; }
 
-        [JsonProperty("timeoutInSeconds")] public int TimeOutInSeconds { get; set; }
+        [JsonProperty("timeoutInSeconds")]
+        public int TimeOutInSeconds { get; set; }
+
+        [JsonProperty("downloadTimeOutInSeconds")]
+        public int DownloadTimeOutInSeconds { get; set; }
 
         [JsonProperty("pollingIntervalInMillis")]
         public int PollingIntervalInMillis { get; set; }
@@ -25,7 +30,14 @@ namespace Framework.Configuration
 
         [JsonProperty("screenshotsFolder")] 
         public string ScreenshotsFolder { get; set; }
+
+        [JsonProperty("mailRuLogin")]
+        public string MailRuLogin { get; set; }
         
+        [JsonProperty("mailRuPassword")]
+        public string MailRuPassword { get; set; }
+        
+
         public static T ParseConfiguration<T>(string jsonText) where T : IConfiguration
         {
             return JsonConvert.DeserializeObject<T>(jsonText, new JsonSerializerSettings

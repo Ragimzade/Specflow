@@ -23,7 +23,6 @@ namespace Framework.Browsers
 
         public static void OpenBaseUrl(this IWebDriver driver)
         {
-            Log.Debug("browser");
             driver.Url = Config.BaseUrl;
         }
 
